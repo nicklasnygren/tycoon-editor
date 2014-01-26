@@ -1,58 +1,127 @@
 'use strict';
 
 angular.module('techtreeBuilderApp')
-.directive('depLayout', function () {
+.directive('depLayout', function ($window) {
     return {
         restrict: 'EC',
         link: function ($scope, $elem, $attrs) {
 
-            /* Create graph data */
-            var nodes = [];
-            for (var i = 0; i < 13; i++) {
-                var datum = {
-                    "value": i
-                };
-                nodes.push(datum);
+            var nodes = [
+            {
+                name:   'Origin',
+                slug:   'origo',
+                attrs:  ['original'],
+                deps:   []
+            },
+            {
+                name:   'Spex',
+                slug:   'spex',
+                attrs:  ['original', 'ride'],
+                deps:   ['origo'],
+            },
+            {
+                name:   'Circus',
+                slug:   'circus',
+                attrs:  ['original', 'ride'],
+                deps:   ['origo'],
+            },
+            {
+                name:   'Parade',
+                slug:   'parade',
+                attrs:  ['original', 'ride'],
+                deps:   ['origo'],
+            },
+            {
+                name:   'Movie',
+                slug:   'movie',
+                attrs:  ['original', 'ride'],
+                deps:   ['origo'],
+            },
+            {
+                name:   'Poster',
+                slug:   'poster',
+                attrs:  ['original', 'marketing'],
+                deps:   ['origo'],
+            },
+            {
+                name:   'Radio',
+                slug:   'radio',
+                attrs:  ['marketing'],
+                deps:   ['movie', 'poster'],
+            },
+            {
+                name:   'Children\'s carnival',
+                slug:   'childival',
+                attrs:  ['ride'],
+                deps:   ['circus', 'spex'],
+            },
+            {
+                name:   'Revue',
+                slug:   'revue',
+                attrs:  ['ride'],
+                deps:   ['circus', 'spex'],
+            },
+            {
+                name:   'Cabaret',
+                slug:   'cabaret',
+                attrs:  ['ride'],
+                deps:   ['revue'],
+            },
+            {
+                name:   'Show',
+                slug:   'show',
+                attrs:  ['ride'],
+                deps:   ['revue'],
+            },
+            {
+                name:   'Food stand',
+                slug:   'food-stand',
+                attrs:  ['utility'],
+                deps:   ['origo'],
+            },
+            {
+                name:   'Toilets I',
+                slug:   'toilets-1',
+                attrs:  ['utility'],
+                deps:   ['origo'],
+            },
+            {
+                name:   'Toilets II',
+                slug:   'toilets-2',
+                attrs:  ['utility'],
+                deps:   ['toilets-1'],
+            },
+            ];
+
+            var links = [];
+            for (var i in nodes) {
+                for (var j in nodes[i].deps) {
+                    links.push({
+                        target: nodes[i],
+                        source: $.grep(nodes, function (node) {
+                            return node.slug == nodes[i].deps[j]
+                        })[0],
+                    });
+                }
             }
 
-            var links = [{"source": 0, "target": 1},
-                         {"source": 1, "target": 2},
-                         {"source": 2, "target": 0},
-                         {"source": 1, "target": 3},
-                         {"source": 3, "target": 2},
-                         {"source": 3, "target": 4},
-                         {"source": 4, "target": 5},
-                         {"source": 5, "target": 6},
-                         {"source": 5, "target": 7},
-                         {"source": 6, "target": 7},
-                         {"source": 6, "target": 8},
-                         {"source": 7, "target": 8},
-                         {"source": 9, "target": 4},
-                         {"source": 9, "target": 11},
-                         {"source": 9, "target": 10},
-                         {"source": 10, "target": 11},
-                         {"source": 11, "target": 12},
-                         {"source": 12, "target": 10}];
-
             /* Create force graph */
-            var w = 800;
-            var h = 500;
+            var w = $window.outerWidth;
+            var h = 1000;
 
             var size = nodes.length;
             nodes.forEach(function(d, i) { d.x = d.y = w / size * i});
 
             var svg = d3.select($elem[0]).append("svg")
                 .attr("width", w)
-                .attr("weight", h);
-            
-            console.log(svg);
-
+                .attr("height", h)
+                .attr("overflow", "scroll");
 
             var force = d3.layout.force()
                 .nodes(nodes)
                 .links(links)
-                .linkDistance(50)
-                .charge(-1200)
+                .linkDistance(30)
+                .charge(-2000)
                 .size([w, h]);
 
             setTimeout(function() {
@@ -75,7 +144,9 @@ angular.module('techtreeBuilderApp')
                     .selectAll("circle")
                     .data(nodes)
                     .enter().append("svg:circle")
-                    .attr("class", "node")
+                    .attr("class", function (d) {
+                        return d.attrs ? d.attrs.join(' ') : '';
+                    })
                     .attr("cx", function(d) { return d.x; })
                     .attr("cy", function(d) { return d.y; })
                     .attr("r", 25);
@@ -88,7 +159,7 @@ angular.module('techtreeBuilderApp')
                     .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
                     .attr("text-anchor", "middle")
                     .attr("y", ".3em")
-                    .text(function(d) { return d.value; });
+                    .text(function(d) { return d.name; });
 
             }, 10);
         }
