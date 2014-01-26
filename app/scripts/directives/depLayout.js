@@ -51,8 +51,8 @@ angular.module('techtreeBuilderApp')
             var force = d3.layout.force()
                 .nodes(nodes)
                 .links(links)
-                .linkDistance(100)
-                .linkStrength(10)
+                .linkDistance(50)
+                .charge(-1200)
                 .size([w, h]);
 
             setTimeout(function() {
@@ -78,7 +78,7 @@ angular.module('techtreeBuilderApp')
                     .attr("class", "node")
                     .attr("cx", function(d) { return d.x; })
                     .attr("cy", function(d) { return d.y; })
-                    .attr("r", 15);
+                    .attr("r", 25);
 
                 svg.append("svg:g")
                     .selectAll("text")
