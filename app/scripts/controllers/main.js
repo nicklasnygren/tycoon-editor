@@ -9,7 +9,12 @@ angular.module('techtreeBuilderApp')
         }
     }
     $scope.edit = function (node) {
-        $scope.editedNode = node;
+        for (var i in $scope.nodes) {
+            if ($scope.nodes[i].slug == node.slug) {
+                $scope.currentNodeId = i;
+                break;
+            }
+        }
     }
 
     $scope.nodes = [
