@@ -36,11 +36,15 @@ line {
   position: fixed;
   height: 100%;
   width: 450px;
-  padding-top: 15px;
   right: 0;
   top: 0;
+  padding-top: 15px;
   background: #FAFAFA;
   border-left: 1px solid #BBB;
   z-index: 400;
+
+  .row:not(:last-child) {
+    margin-bottom: 10px;
+  }
 }
 

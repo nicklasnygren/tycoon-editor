@@ -3,8 +3,13 @@
 angular.module('techtreeBuilderApp')
   .controller('MainCtrl', function ($scope) {
 
-    $scope.onClick = function () {
-        alert('click');
+    $scope.onClick = function (node) {
+        if (!$scope.selectionMode) {
+            $scope.edit(node);
+        }
+    }
+    $scope.edit = function (node) {
+        $scope.editedNode = node;
     }
 
     $scope.nodes = [
