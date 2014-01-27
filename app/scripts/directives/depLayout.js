@@ -4,79 +4,46 @@ angular.module('techtreeBuilderApp')
 .directive('depLayout', function ($window) {
     return {
         restrict: 'EC',
-        link: function ($scope, $elem, $attrs) {
-            var nodes = $scope.nodes;
+        templateUrl: 'views/depLayout.html',
+        replace: true,
+        controller: function ($scope) {
+            $scope.width = 2000;
+            $scope.height = 1000;
+            $scope.textSize = '.3em';
 
-            var links = [];
-            for (var i in nodes) {
-                for (var j in nodes[i].deps) {
-                    links.push({
-                        target: nodes[i],
-                        source: $.grep(nodes, function (node) {
-                            return node.slug == nodes[i].deps[j]
+            var color = d3.scale.category20()
+
+            $scope.links = [];
+            for (var i in $scope.nodes) {
+                for (var j in $scope.nodes[i].deps) {
+                    $scope.links.push({
+                        target: $scope.nodes[i],
+                        source: $.grep($scope.nodes, function (node) {
+                            return node.slug == $scope.nodes[i].deps[j]
                         })[0],
                     });
                 }
             }
 
-            /* Create force graph */
-            var w = $window.outerWidth;
-            var h = 1000;
-
-            var size = nodes.length;
-            nodes.forEach(function(d, i) { d.x = d.y = w / size * i});
-
-            var svg = d3.select($elem[0]).append("svg")
-                .attr("width", w)
-                .attr("height", h)
-                .attr("overflow", "scroll");
-
             var force = d3.layout.force()
-                .nodes(nodes)
-                .links(links)
-                .linkDistance(30)
                 .charge(-2000)
-                .size([w, h]);
+                .linkDistance(45)
+                .size([$scope.width, $scope.height]);
 
-            setTimeout(function() {
+                for(var i=0; i < $scope.links.length ; i++){ 
+                    $scope.links[i].strokeWidth = Math.round(Math.sqrt($scope.links[i].value))
+                }
 
-                var n = 400
-                force.start();
-                for (var i = n * n; i > 0; --i) force.tick();
-                force.stop();
+                for(var i=0; i < $scope.nodes.length ; i++){
+                    $scope.nodes[i].color = color($scope.nodes[i].group)
+                }
 
-                svg.selectAll("line")
-                    .data(links)
-                    .enter().append("line")
-                    .attr("class", "link")
-                    .attr("x1", function(d) { return d.source.x; })
-                    .attr("y1", function(d) { return d.source.y; })
-                    .attr("x2", function(d) { return d.target.x; })
-                    .attr("y2", function(d) { return d.target.y; });
-
-                svg.append("svg:g")
-                    .selectAll("circle")
-                    .data(nodes)
-                    .enter().append("svg:circle")
-                    .attr("class", function (d) {
-                        return d.attrs ? d.attrs.join(' ') : '';
-                    })
-                    .attr("cx", function(d) { return d.x; })
-                    .attr("cy", function(d) { return d.y; })
-                    .attr("r", 25);
-
-                svg.append("svg:g")
-                    .selectAll("text")
-                    .data(nodes)
-                    .enter().append("svg:text")
-                    .attr("class", "label")
-                    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-                    .attr("text-anchor", "middle")
-                    .attr("y", ".3em")
-                    .text(function(d) { return d.name; });
-
-            }, 10);
-        }
+                force
+                    .nodes($scope.nodes)
+                    .links($scope.links)
+                    .on("tick", function(){$scope.$apply()})
+                    .start();
+        },
     }
 });
 
