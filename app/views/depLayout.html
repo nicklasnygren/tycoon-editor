@@ -10,6 +10,7 @@
             ng-attr-y2="{{link.target.y}}">
     </line>
     <circle ng-repeat="node in nodes"
+            ng-click="onClick()"
             class="node"
             ng-class="node.attrs.join(' ')"
             r="10"

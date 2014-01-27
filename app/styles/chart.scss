@@ -11,6 +11,10 @@ svg {
 }
 circle {
   stroke: black;
+  cursor: pointer;
+}
+text {
+  cursor: pointer;
 }
 .ride {
   fill: lighten(yellow, 25%);
@@ -26,5 +30,17 @@ circle {
 }
 line {
   stroke: #BBB;
+}
+
+#sidebar {
+  position: fixed;
+  height: 100%;
+  width: 450px;
+  padding-top: 15px;
+  right: 0;
+  top: 0;
+  background: #FAFAFA;
+  border-left: 1px solid #BBB;
+  z-index: 400;
 }
 

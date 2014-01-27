@@ -3,6 +3,10 @@
 angular.module('techtreeBuilderApp')
   .controller('MainCtrl', function ($scope) {
 
+    $scope.onClick = function () {
+        alert('click');
+    }
+
     $scope.nodes = [
     {
         name:   'Origin',

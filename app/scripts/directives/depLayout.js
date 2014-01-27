@@ -6,8 +6,9 @@ angular.module('techtreeBuilderApp')
         restrict: 'EC',
         templateUrl: 'views/depLayout.html',
         controller: function ($scope) {
-            $scope.width = 2000;
-            $scope.height = 1000;
+
+            $scope.width = $window.outerWidth-250;
+            $scope.height = $window.outerHeight-300;
             $scope.textSize = '.3em';
             $scope.scale = 1;
 
@@ -27,7 +28,7 @@ angular.module('techtreeBuilderApp')
 
             var force = d3.layout.force()
                 .charge(-2000)
-                .linkDistance(45)
+                .linkDistance(25)
                 .size([$scope.width, $scope.height]);
 
                 for(var i=0; i < $scope.links.length ; i++){ 
