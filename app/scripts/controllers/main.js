@@ -2,10 +2,20 @@
 
 angular.module('techtreeBuilderApp')
   .controller('MainCtrl', function ($scope) {
+    $scope.selectionMode = false;
 
+    $scope.toggleSelectionMode = function () {
+        $scope.selectionMode = !$scope.selectionMode;
+        if ($scope.selectionMode) {
+            $scope.nodes[$scope.currentNodeId].deps = [];
+        }
+    }
     $scope.onClick = function (node) {
+        console.log($scope.selectionMode);
         if (!$scope.selectionMode) {
             $scope.edit(node);
+        } else {
+            $scope.selectParent(node);
         }
     }
     $scope.edit = function (node) {
@@ -15,6 +25,10 @@ angular.module('techtreeBuilderApp')
                 break;
             }
         }
+    }
+    $scope.selectParent = function (node) {
+        $scope.nodes[$scope.currentNodeId].deps.push(node.slug);
+        $scope.nodes.pop();
     }
 
     $scope.nodes = [

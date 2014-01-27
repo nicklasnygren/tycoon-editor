@@ -2,6 +2,14 @@
   <div class="row">
     <div class="col-xs-12">
       <button ng-click="addNew()" class="btn btn-primary">Add new</button>
+      <button ng-click="toggleSelectionMode()" ng-if="currentNodeId" ng-click="setDeps()" class="btn btn-default">
+        <span ng-if="selectionMode">
+          Done
+        </span>
+        <span ng-if="!selectionMode">
+          Set parents
+        </span>
+      </button>
     </div>
   </div>
   <div class="row">
