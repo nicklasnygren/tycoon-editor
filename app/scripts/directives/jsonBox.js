@@ -8,7 +8,7 @@ angular.module('techtreeBuilderApp')
             return JSON.parse(input);
           }
           function out(data) {
-            return JSON.stringify(data);
+            return JSON.stringify(data, null, '\t');
           }
           ngModel.$parsers.push(into);
           ngModel.$formatters.push(out);
