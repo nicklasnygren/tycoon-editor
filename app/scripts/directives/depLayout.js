@@ -5,11 +5,11 @@ angular.module('techtreeBuilderApp')
     return {
         restrict: 'EC',
         templateUrl: 'views/depLayout.html',
-        replace: true,
         controller: function ($scope) {
             $scope.width = 2000;
             $scope.height = 1000;
             $scope.textSize = '.3em';
+            $scope.scale = 1;
 
             var color = d3.scale.category20()
 
@@ -44,6 +44,14 @@ angular.module('techtreeBuilderApp')
                     .on("tick", function(){$scope.$apply()})
                     .start();
         },
+        link: function (scope, element) {
+            var svg = d3.select('#canvas')
+                .call(d3.behavior.zoom().on("zoom", zoom));
+
+            function zoom() {
+                svg.selectAll("g").attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")");
+            }
+        }
     }
 });
 

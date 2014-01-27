@@ -1,28 +1,30 @@
-<svg ng-attr-width="{{width}}"
+<svg id="canvas" ng-attr-width="{{width}}"
    ng-attr-height="{{height}}">
-  <line   ng-repeat="link in links"
-          class="link"
-          ng-attr-stroke-width="{{link.strokeWidth}}"
-          ng-attr-x1="{{link.source.x}}"
-          ng-attr-y1="{{link.source.y}}"
-          ng-attr-x2="{{link.target.x}}"
-          ng-attr-y2="{{link.target.y}}">
-  </line>
-  <circle ng-repeat="node in nodes"
-          class="node"
-          ng-class="node.attrs.join(' ')"
-          r="10"
-          ng-attr-fill="{{node.color}}"
-          ng-attr-cx="{{node.x}}"
-          ng-attr-cy="{{node.y}}">
-      <title>{{node.name}}</title>
-  </circle>
-  <text ng-repeat="node in nodes"
-          class="label"
-          ng-attr-y="{{textSize}}"
-          ng-attr-text-anchor="middle"
-          ng-attr-transform="{{'translate(' + (node.x + 15) + ',' + node.y +')'}}">
-          {{node.name}}
-  </text>
+   <g id="force">
+    <line   ng-repeat="link in links"
+            class="link"
+            ng-attr-stroke-width="{{link.strokeWidth}}"
+            ng-attr-x1="{{link.source.x}}"
+            ng-attr-y1="{{link.source.y}}"
+            ng-attr-x2="{{link.target.x}}"
+            ng-attr-y2="{{link.target.y}}">
+    </line>
+    <circle ng-repeat="node in nodes"
+            class="node"
+            ng-class="node.attrs.join(' ')"
+            r="10"
+            ng-attr-fill="{{node.color}}"
+            ng-attr-cx="{{node.x}}"
+            ng-attr-cy="{{node.y}}">
+        <title>{{node.name}}</title>
+    </circle>
+    <text ng-repeat="node in nodes"
+            class="label"
+            ng-attr-y="{{textSize}}"
+            ng-attr-text-anchor="middle"
+            ng-attr-transform="{{'translate(' + (node.x + 15) + ',' + node.y +')'}}">
+            {{node.name}}
+    </text>
+  </g>
 </svg>
 
