@@ -47,17 +47,31 @@ angular.module('techtreeBuilderApp')
     }
 
     var saveNodes = function () {
+        // Clean out d3 data
+        var newNodes = angular.copy($scope.nodes);
+        console.log('Saving nodes');
+        for (var i in newNodes) {
+            newNodes[i].px = undefined;
+            newNodes[i].py = undefined;
+            newNodes[i].color = undefined;
+            newNodes[i].weight = undefined;
+            newNodes[i].x = undefined;
+            newNodes[i].y = undefined;
+        };
         try {
-            localStorage.techNodes = JSON.stringify($scope.nodes);
+            localStorage.techNodes = JSON.stringify(newNodes);
         } catch (err) {
             console.log(err);
         }
     }
     var loadNodes = function () {
+        console.log('Loading nodes');
         $scope.nodes = localStorage.techNodes ? JSON.parse(localStorage.techNodes) : [];
-        $scope.$watch('nodes', saveNodes, true);
     }
     loadNodes();
+    $scope.$watchCollection('nodes', saveNodes);
+    $scope.$on('refresh', saveNodes);
+    setInterval(saveNodes, 60000);
 
     $scope.awesomeThings = [
       'HTML5 Boilerplate',

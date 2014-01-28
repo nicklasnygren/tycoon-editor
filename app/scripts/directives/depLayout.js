@@ -14,8 +14,8 @@ angular.module('techtreeBuilderApp')
 
             var draw = function () {
 
-                $scope.width = $window.outerWidth-450;
-                $scope.height = $window.outerHeight;
+                $scope.width = $window.innerWidth-450;
+                $scope.height = $window.innerHeight;
 
                 $scope.links = [];
                 for (var i in $scope.nodes) {
