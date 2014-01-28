@@ -6,12 +6,8 @@ angular.module('techtreeBuilderApp')
 
     $scope.toggleSelectionMode = function () {
         $scope.selectionMode = !$scope.selectionMode;
-        if ($scope.selectionMode) {
-            $scope.nodes[$scope.currentNodeId].deps = [];
-        }
     }
     $scope.onClick = function (node) {
-        console.log($scope.selectionMode);
         if (!$scope.selectionMode) {
             $scope.edit(node);
         } else {
@@ -27,8 +23,14 @@ angular.module('techtreeBuilderApp')
         }
     }
     $scope.selectParent = function (node) {
-        $scope.nodes[$scope.currentNodeId].deps.push(node.slug);
-        $scope.nodes.pop();
+        var tempNode    = $scope.nodes[$scope.currentNodeId],
+            depIndex    = tempNode.deps.indexOf(node.slug);
+        if (depIndex > -1) {
+            tempNode.deps.splice(depIndex, 1);
+        } else {
+            tempNode.deps.push(node.slug);
+        }
+        $scope.$emit('refresh');
     }
 
     $scope.nodes = [

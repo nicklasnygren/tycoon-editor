@@ -49,6 +49,7 @@ angular.module('techtreeBuilderApp')
                         .start();
             }
             draw();
+            $scope.$on('refresh', draw);
             $scope.$watchCollection('nodes', draw);
         },
         link: function (scope, element) {
