@@ -30,9 +30,9 @@ angular.module('techtreeBuilderApp')
                 }
 
                 var force = d3.layout.force()
-                    .charge(-2500)
-                    .linkDistance(100)
-                    .linkStrength(2)
+                    .charge(-1200)
+                    .linkDistance(70)
+                    .linkStrength(3)
                     .size([$scope.width, $scope.height]);
 
                     for(var i=0; i < $scope.links.length ; i++){ 

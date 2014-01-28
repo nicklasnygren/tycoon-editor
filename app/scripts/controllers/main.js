@@ -49,7 +49,6 @@ angular.module('techtreeBuilderApp')
     $scope.addNew = function () {
         $scope.nodes.push(angular.copy(nodeTemplate));
         $scope.currentNodeId = $scope.nodes.length - 1;
-        $scope.selectionMode = true;
     }
 
     var saveNodes = function () {
@@ -63,6 +62,15 @@ angular.module('techtreeBuilderApp')
             newNodes[i].weight = undefined;
             newNodes[i].x = undefined;
             newNodes[i].y = undefined;
+
+            // Clean dead deps
+            for (var j in newNodes[i].deps) {
+                if (!$.grep(newNodes, function (node) {
+                    return node.slug == newNodes[i].deps[j];
+                }).length) {
+                    newNodes[i].deps.splice(j, 1);
+                }
+            }
         };
         try {
             localStorage.techNodes = JSON.stringify(newNodes);
