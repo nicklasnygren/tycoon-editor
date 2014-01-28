@@ -33,6 +33,17 @@ angular.module('techtreeBuilderApp')
         $scope.$emit('refresh');
     }
 
+    var nodeTemplate = {
+        name:   'Unnamed tech',
+        slug:   'unnamed-tech',
+        attrs:  [],
+        deps:   [],
+    }
+    $scope.addNew = function () {
+        $scope.nodes.push(angular.copy(nodeTemplate));
+        $scope.currentNodeId = $scope.nodes.length - 1;
+    }
+
     $scope.nodes = [
     {
         name:   'Origin',

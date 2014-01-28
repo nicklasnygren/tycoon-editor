@@ -14,7 +14,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <textarea ng-if="currentNodeId" rows="20" class="form-control json-box" ng-model="nodes[currentNodeId]"></textarea>
+      <textarea ng-disabled="selectionMode" ng-if="currentNodeId" rows="20" class="form-control json-box" ng-model="nodes[currentNodeId]"></textarea>
     </div>
   </div>
 </div>
