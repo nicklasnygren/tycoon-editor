@@ -12,7 +12,7 @@
     <circle ng-repeat="node in nodes"
             ng-click="onClick(node)"
             class="node"
-            ng-class="node.attrs.join(' ')"
+            ng-class="node.type"
             r="10"
             ng-attr-fill="{{node.color}}"
             ng-attr-cx="{{node.x}}"

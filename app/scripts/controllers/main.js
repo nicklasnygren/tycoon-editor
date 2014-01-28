@@ -3,6 +3,7 @@
 angular.module('techtreeBuilderApp')
   .controller('MainCtrl', function ($scope) {
     $scope.selectionMode = false;
+    $scope.nodeTypes = ['ride', 'utility', 'marketing']
 
     $scope.toggleSelectionMode = function () {
         $scope.selectionMode = !$scope.selectionMode;
@@ -27,7 +28,7 @@ angular.module('techtreeBuilderApp')
             depIndex    = tempNode.deps.indexOf(node.slug);
         if (depIndex > -1) {
             tempNode.deps.splice(depIndex, 1);
-        } else {
+        } else if (tempNode.slug != node.slug) {
             tempNode.deps.push(node.slug);
         }
         $scope.$emit('refresh');
@@ -36,100 +37,27 @@ angular.module('techtreeBuilderApp')
     var nodeTemplate = {
         name:   'Unnamed tech',
         slug:   'unnamed-tech',
-        attrs:  [],
+        type:   'ride',
         deps:   [],
     }
     $scope.addNew = function () {
         $scope.nodes.push(angular.copy(nodeTemplate));
         $scope.currentNodeId = $scope.nodes.length - 1;
+        $scope.selectionMode = true;
     }
 
-    $scope.nodes = [
-    {
-        name:   'Origin',
-        slug:   'origo',
-        attrs:  ['original'],
-        deps:   []
-    },
-    {
-        name:   'Spex',
-        slug:   'spex',
-        attrs:  ['original', 'ride'],
-        deps:   ['origo'],
-    },
-    {
-        name:   'Circus',
-        slug:   'circus',
-        attrs:  ['original', 'ride'],
-        deps:   ['origo'],
-    },
-    {
-        name:   'Parade',
-        slug:   'parade',
-        attrs:  ['original', 'ride'],
-        deps:   ['origo'],
-    },
-    {
-        name:   'Movie',
-        slug:   'movie',
-        attrs:  ['original', 'ride'],
-        deps:   ['origo'],
-    },
-    {
-        name:   'Poster',
-        slug:   'poster',
-        attrs:  ['original', 'marketing'],
-        deps:   ['origo'],
-    },
-    {
-        name:   'Radio',
-        slug:   'radio',
-        attrs:  ['marketing'],
-        deps:   ['movie', 'poster'],
-    },
-    {
-        name:   'Children\'s carnival',
-        slug:   'childival',
-        attrs:  ['ride'],
-        deps:   ['circus', 'spex'],
-    },
-    {
-        name:   'Revue',
-        slug:   'revue',
-        attrs:  ['ride'],
-        deps:   ['circus', 'spex'],
-    },
-    {
-        name:   'Cabaret',
-        slug:   'cabaret',
-        attrs:  ['ride'],
-        deps:   ['revue'],
-    },
-    {
-        name:   'Show',
-        slug:   'show',
-        attrs:  ['ride'],
-        deps:   ['revue'],
-    },
-    {
-        name:   'Food stand',
-        slug:   'food-stand',
-        attrs:  ['utility'],
-        deps:   ['origo'],
-    },
-    {
-        name:   'Toilets I',
-        slug:   'toilets-1',
-        attrs:  ['utility'],
-        deps:   ['origo'],
-    },
-    {
-        name:   'Toilets II',
-        slug:   'toilets-2',
-        attrs:  ['utility'],
-        deps:   ['toilets-1'],
-    },
-    ];
+    var saveNodes = function () {
+        try {
+            localStorage.techNodes = JSON.stringify($scope.nodes);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    var loadNodes = function () {
+        $scope.nodes = localStorage.techNodes ? JSON.parse(localStorage.techNodes) : [];
+        $scope.$watch('nodes', saveNodes, true);
+    }
+    loadNodes();
 
     $scope.awesomeThings = [
       'HTML5 Boilerplate',

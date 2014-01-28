@@ -7,14 +7,15 @@ angular.module('techtreeBuilderApp')
         templateUrl: 'views/depLayout.html',
         controller: function ($scope) {
 
-            $scope.width = $window.outerWidth-250;
-            $scope.height = $window.outerHeight-300;
             $scope.textSize = '.3em';
             $scope.scale = 1;
 
             var color = d3.scale.category20()
 
             var draw = function () {
+
+                $scope.width = $window.outerWidth-450;
+                $scope.height = $window.outerHeight;
 
                 $scope.links = [];
                 for (var i in $scope.nodes) {
@@ -29,7 +30,7 @@ angular.module('techtreeBuilderApp')
                 }
 
                 var force = d3.layout.force()
-                    .charge(-1200)
+                    .charge(-2500)
                     .linkDistance(100)
                     .linkStrength(2)
                     .size([$scope.width, $scope.height]);

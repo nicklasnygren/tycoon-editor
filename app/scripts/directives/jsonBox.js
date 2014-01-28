@@ -12,7 +12,6 @@ angular.module('techtreeBuilderApp')
           }
           ngModel.$parsers.push(into);
           ngModel.$formatters.push(out);
-
         }
     };
 });

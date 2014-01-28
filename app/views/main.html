@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-xs-12">
       <button ng-click="addNew()" class="btn btn-primary">Add new</button>
-      <button ng-click="toggleSelectionMode()" ng-if="currentNodeId" ng-click="setDeps()" class="btn btn-default">
+      <button ng-click="toggleSelectionMode()" ng-if="currentNodeId > -1" ng-click="setDeps()" class="btn btn-default">
         <span ng-if="selectionMode">
           Done
         </span>
@@ -12,11 +12,28 @@
       </button>
     </div>
   </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <textarea ng-disabled="selectionMode" ng-if="currentNodeId" rows="20" class="form-control json-box" ng-model="nodes[currentNodeId]"></textarea>
+  <form ng-if="currentNodeId > -1">
+    <div class="row">
+      <div class="col-xs-12">
+        <label for="name">Name</label>
+        <input type="text" id="name" ng-model="nodes[currentNodeId].name" class="form-control" />
+      </div>
     </div>
-  </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <label for="slug">Machine name</label>
+        <input type="text" id="slug" ng-model="nodes[currentNodeId].slug" class="form-control" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <label for="type">Type</label>
+        <select id="type" ng-model="nodes[currentNodeId].type" class="form-control">
+          <option ng-repeat="nodeType in nodeTypes">{{ nodeType }}</option>
+        </select>
+      </div>
+    </div>
+  </form>
 </div>
 
 <dep-layout></dep-layout>
