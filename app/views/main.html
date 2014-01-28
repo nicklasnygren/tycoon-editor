@@ -10,6 +10,7 @@
           Set parents
         </span>
       </button>
+      <button ng-if="currentNodeId > -1" ng-click="deleteCurrentNode()" class="btn btn-danger pull-right">Delete</button>
     </div>
   </div>
   <form ng-if="currentNodeId > -1">

@@ -33,6 +33,12 @@ angular.module('techtreeBuilderApp')
         }
         $scope.$emit('refresh');
     }
+    $scope.deleteCurrentNode = function () {
+        if (confirm('Are you sure?')) {
+            $scope.nodes.splice($scope.currentNodeId, 1);
+            $scope.currentNodeId = undefined;
+        }
+    }
 
     var nodeTemplate = {
         name:   'Unnamed tech',
