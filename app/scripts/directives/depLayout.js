@@ -20,11 +20,13 @@ angular.module('techtreeBuilderApp')
                 $scope.links = [];
                 for (var i in $scope.nodes) {
                     for (var j in $scope.nodes[i].deps) {
+                        var source = $.grep($scope.nodes, function (node) {
+                            return node.id == $scope.nodes[i].deps[j]
+                        })[0];
                         $scope.links.push({
                             target: $scope.nodes[i],
-                            source: $.grep($scope.nodes, function (node) {
-                                return node.slug == $scope.nodes[i].deps[j]
-                            })[0],
+                            source: source,
+                            weight: source.id == 'origo' ? 10 : 1,
                         });
                     }
                 }

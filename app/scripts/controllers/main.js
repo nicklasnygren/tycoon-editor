@@ -17,7 +17,7 @@ angular.module('techtreeBuilderApp')
     }
     $scope.edit = function (node) {
         for (var i in $scope.nodes) {
-            if ($scope.nodes[i].slug == node.slug) {
+            if ($scope.nodes[i].id == node.id) {
                 $scope.currentNodeId = i;
                 break;
             }
@@ -25,11 +25,11 @@ angular.module('techtreeBuilderApp')
     }
     $scope.selectParent = function (node) {
         var tempNode    = $scope.nodes[$scope.currentNodeId],
-            depIndex    = tempNode.deps.indexOf(node.slug);
+            depIndex    = tempNode.deps.indexOf(node.id);
         if (depIndex > -1) {
             tempNode.deps.splice(depIndex, 1);
-        } else if (tempNode.slug != node.slug) {
-            tempNode.deps.push(node.slug);
+        } else if (tempNode.id != node.id) {
+            tempNode.deps.push(node.id);
         }
         $scope.$emit('refresh');
     }
@@ -42,7 +42,7 @@ angular.module('techtreeBuilderApp')
 
     var nodeTemplate = {
         name:   'Unnamed tech',
-        slug:   'unnamed-tech',
+        id:   'unnamed-tech',
         type:   'ride',
         deps:   [],
     }
@@ -66,7 +66,7 @@ angular.module('techtreeBuilderApp')
             // Clean dead deps
             for (var j in newNodes[i].deps) {
                 if (!$.grep(newNodes, function (node) {
-                    return node.slug == newNodes[i].deps[j];
+                    return node.id == newNodes[i].deps[j];
                 }).length) {
                     newNodes[i].deps.splice(j, 1);
                 }
