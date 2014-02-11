@@ -53,8 +53,10 @@ angular.module('techtreeBuilderApp')
 
   // Exports all the JSON
   DataService.export = function (nodes) {
-    var newNodes = this.cleanNodes(nodes);
-    var text = 'data:text/plain;charset=utf-8,' + JSON.stringify(newNodes);
+    var data = {
+      techNodes: this.cleanNodes(nodes),
+    };
+    var text = 'data:text/plain;charset=utf-8,' + JSON.stringify(data);
     var link = document.createElement('a');
     var e = document.createEvent('MouseEvents');
     link.href = text;
