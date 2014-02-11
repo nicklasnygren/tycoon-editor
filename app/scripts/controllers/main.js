@@ -48,6 +48,10 @@ angular.module('techtreeBuilderApp')
     deps:   [],
   }
 
+  $scope.download = function () {
+    DataService.export($scope.nodes);
+  }
+
   $scope.addNew = function () {
     var newNode = angular.copy(nodeTemplate);
 

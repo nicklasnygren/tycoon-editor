@@ -7,12 +7,10 @@ angular.module('techtreeBuilderApp')
 
   var DataService = {};
 
-  // This will save tech nodes to localstorage
-  DataService.saveNodes = function (nodes) {
-
+  // Clean nodes from various diseases
+  DataService.cleanNodes = function (nodes) {
     // Clean out d3 data
     var newNodes = angular.copy(nodes);
-    console.log('Saving nodes');
     for (var i in newNodes) {
       delete newNodes[i].px;
       delete newNodes[i].py;
@@ -29,14 +27,21 @@ angular.module('techtreeBuilderApp')
           newNodes[i].deps.splice(j, 1);
         }
       }
+    }
 
-      try {
-        localStorage.techNodes = JSON.stringify(newNodes);
-        return true;
-      } catch (err) {
-        console.log(err);
-        return false;
-      }
+    return newNodes;
+  }
+
+  // This will save tech nodes to localstorage
+  DataService.saveNodes = function (nodes) {
+    var newNodes = this.cleanNodes(nodes);
+    console.log('Saving nodes');
+    try {
+      localStorage.techNodes = JSON.stringify(newNodes);
+      return true;
+    } catch (err) {
+      console.log(err);
+      return false;
     }
   }
 
@@ -44,6 +49,13 @@ angular.module('techtreeBuilderApp')
   DataService.loadNodes = function (callback) {
     console.log('Loading nodes');
     return localStorage.techNodes ? JSON.parse(localStorage.techNodes) : [];
+  }
+
+  // Exports all the JSON
+  DataService.export = function (nodes) {
+    var newNodes = this.cleanNodes(nodes);
+    var text = 'data:text/plain;charset=utf-8,' + JSON.stringify(newNodes);
+    window.open(text, '_self');
   }
 
   return DataService;
