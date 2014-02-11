@@ -6,6 +6,15 @@ angular.module('techtreeBuilderApp')
 .factory('DataService', function () {
 
   var DataService = {};
+  
+  // Template for nodes
+  DataService.nodeTemplate = {
+    name:     'Unnamed tech',
+    id:       0,
+    type:     'ride',
+    deps:     [],
+    duration: 20,
+  };
 
   // Clean nodes from various diseases
   DataService.cleanNodes = function (nodes) {
@@ -30,7 +39,7 @@ angular.module('techtreeBuilderApp')
     }
 
     return newNodes;
-  }
+  };
 
   // This will save tech nodes to localstorage
   DataService.saveNodes = function (nodes) {
@@ -43,13 +52,20 @@ angular.module('techtreeBuilderApp')
       console.log(err);
       return false;
     }
-  }
+  };
 
   // This will load tech nodes from localstorage
   DataService.loadNodes = function (callback) {
     console.log('Loading nodes');
-    return localStorage.techNodes ? JSON.parse(localStorage.techNodes) : [];
-  }
+    var nodes = localStorage.techNodes ? JSON.parse(localStorage.techNodes) : [];
+    var newNodes = [];
+    for (var i in nodes) {
+      var newNode = angular.copy(this.nodeTemplate);
+      console.log(newNode);
+      newNodes.push(angular.extend(newNode, nodes[i]));
+    }
+    return newNodes;
+  };
 
   // Exports all the JSON
   DataService.export = function (nodes) {
@@ -64,7 +80,7 @@ angular.module('techtreeBuilderApp')
     e.initEvent('click', true, true);
     link.dispatchEvent(e);
     return true;
-  }
+  };
 
   return DataService;
 });

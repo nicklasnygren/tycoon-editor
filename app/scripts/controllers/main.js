@@ -41,19 +41,12 @@ angular.module('techtreeBuilderApp')
     }
   }
 
-  var nodeTemplate = {
-    name:   'Unnamed tech',
-    id:   0,
-    type:   'ride',
-    deps:   [],
-  }
-
   $scope.download = function () {
     DataService.export($scope.nodes);
   }
 
   $scope.addNew = function () {
-    var newNode = angular.copy(nodeTemplate);
+    var newNode = angular.copy(DataService.nodeTemplate);
 
     for (var i in $scope.nodes) {
       if ($scope.nodes[i].id >= newNode.id) {
