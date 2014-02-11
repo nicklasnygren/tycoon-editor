@@ -55,7 +55,13 @@ angular.module('techtreeBuilderApp')
   DataService.export = function (nodes) {
     var newNodes = this.cleanNodes(nodes);
     var text = 'data:text/plain;charset=utf-8,' + JSON.stringify(newNodes);
-    window.open(text, '_self');
+    var link = document.createElement('a');
+    var e = document.createEvent('MouseEvents');
+    link.href = text;
+    link.download = 'GameData.json';
+    e.initEvent('click', true, true);
+    link.dispatchEvent(e);
+    return true;
   }
 
   return DataService;

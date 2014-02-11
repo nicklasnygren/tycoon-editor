@@ -69,8 +69,9 @@ angular.module('techtreeBuilderApp')
   }
   $scope.nodes = DataService.loadNodes();
   $scope.$watchCollection('nodes', saveNodes);
+  $scope.$watch('currentNodeId', saveNodes);
   $scope.$on('refresh', saveNodes);
-  setInterval(saveNodes, 60000);
+  setInterval(saveNodes, 5000);
 
   $scope.awesomeThings = [
     'HTML5 Boilerplate',
