@@ -1,6 +1,7 @@
 # Editor for Carnival Tycoon
 
-This is the game data editor for Carnival Tycoon.
+This is the game data editor for Carnival Tycoon written in AngularJS with a D3
+force layout as tech tree visualization.
 
 ## Setup
 
