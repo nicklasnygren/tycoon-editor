@@ -9,8 +9,9 @@ This is the game data editor for Carnival Tycoon.
 3. Install the prerequisites:
 
 ```sh
-$ npm install -g yo
+$ npm install -g yo grunt-cli bower
 $ npm install
+$ bower install
 ```
 
 ## Run the server
@@ -21,4 +22,6 @@ module.
 ```sh
 $ grunt server
 ```
+
+The application is then accessible on http://localhost:9000
 
