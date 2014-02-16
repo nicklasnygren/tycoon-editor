@@ -10,8 +10,11 @@ svg {
   overflow: scroll;
 }
 circle {
-  stroke: black;
   cursor: pointer;
+
+  &.default {
+    stroke: red;
+  }
 }
 text {
   cursor: pointer;
@@ -29,7 +32,7 @@ text {
   fill: lighten(#00FF00, 35%);
 }
 line {
-  stroke: #BBB;
+  stroke: #CCC;
 }
 
 #sidebar {
