@@ -36,6 +36,12 @@
     </div>
     <div class="row">
       <div class="col-xs-12">
+        <label for="year">Year</label>
+        <input type="number" id="year" ng-model="nodes[currentNodeId].year" class="form-control" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
         <label for="type">Type</label>
         <select id="type" ng-model="nodes[currentNodeId].type" class="form-control">
           <option ng-repeat="nodeType in nodeTypes">{{ nodeType }}</option>

@@ -14,6 +14,8 @@ angular.module('techtreeBuilderApp')
     type:     'ride',
     deps:     [],
     duration: 20,
+    default:  false,
+    year:     1954,
   };
 
   // Clean nodes from various diseases
@@ -27,6 +29,7 @@ angular.module('techtreeBuilderApp')
       delete newNodes[i].weight;
       delete newNodes[i].x;
       delete newNodes[i].y;
+      delete newNodes[i].index;
 
       // Clean dead deps
       for (var j in newNodes[i].deps) {
