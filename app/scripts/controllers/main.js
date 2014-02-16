@@ -4,7 +4,7 @@ angular.module('techtreeBuilderApp')
 .controller('MainCtrl', function ($scope, DataService) {
   $scope.nodes = [];
   $scope.selectionMode = false;
-  $scope.nodeTypes = ['ride', 'utility', 'marketing']
+  $scope.nodeTypes = ['ride', 'utility', 'marketing', 'policy'];
 
   $scope.toggleSelectionMode = function () {
     $scope.selectionMode = !$scope.selectionMode;
