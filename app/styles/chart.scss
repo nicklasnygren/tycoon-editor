@@ -17,6 +17,7 @@ circle {
   }
 }
 text {
+  fill: #555;
   cursor: pointer;
 }
 .ride {
@@ -33,6 +34,9 @@ text {
 }
 line {
   stroke: #CCC;
+}
+marker {
+  fill: #CCC;
 }
 
 #sidebar {

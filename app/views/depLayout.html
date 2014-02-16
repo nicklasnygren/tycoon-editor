@@ -1,5 +1,17 @@
 <svg id="canvas" ng-attr-width="{{width}}"
    ng-attr-height="{{height}}">
+   <defs>
+    <marker ng-repeat="link in links"
+            id="{{'marker-' + link.source.id + '-to-' + link.target.id}}"
+            viewBox="0 -5 10 10"
+            markerWidth="6"
+            markerHeight="6"
+            orient="auto"
+            refX="26"
+            refY="{{ Math.sqrt(10) }}">
+            <path d="M0, -5L10, 0L0, 5">
+    </marker>
+   </defs>
    <g id="force">
     <line   ng-repeat="link in links"
             class="link"
@@ -7,7 +19,8 @@
             ng-attr-x1="{{link.source.x}}"
             ng-attr-y1="{{link.source.y}}"
             ng-attr-x2="{{link.target.x}}"
-            ng-attr-y2="{{link.target.y}}">
+            ng-attr-y2="{{link.target.y}}"
+            marker-end="{{'url(#marker-' + link.source.id + '-to-' + link.target.id + ')' }}">
     </line>
     <circle ng-repeat="node in nodes"
             ng-click="onClick(node)"
@@ -20,11 +33,11 @@
         <title>{{node.name}}</title>
     </circle>
     <text ng-repeat="node in nodes"
-            class="label"
-            ng-attr-y="{{textSize}}"
-            ng-attr-text-anchor="middle"
-            ng-attr-transform="{{'translate(' + (node.x + 15) + ',' + node.y +')'}}">
-            {{node.name}}
+          class="label"
+          ng-attr-y="{{textSize}}"
+          ng-attr-text-anchor="middle"
+          ng-attr-transform="{{'translate(' + (node.x + 15) + ',' + node.y +')'}}">
+          {{node.name}}
     </text>
   </g>
 </svg>
